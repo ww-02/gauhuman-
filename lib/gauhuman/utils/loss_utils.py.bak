@@ -78,7 +78,7 @@ def ssim_metric(rgb_pred, rgb_gt, mask_at_box, H, W):
     img_gt = img_gt[y:y + h, x:x + w]
     
     # compute the ssim
-    ssim = structural_similarity(img_pred, img_gt, channel_axis=-1,data_range=1.0)
+    ssim = structural_similarity(img_pred, img_gt, multichannel=True)
     lpips = loss_fn_vgg(torch.from_numpy(img_pred).permute(2, 0, 1).to(torch.float32), torch.from_numpy(img_gt).permute(2, 0, 1).to(torch.float32)).reshape(-1).item()
 
     return ssim, lpips

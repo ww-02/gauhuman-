@@ -24,19 +24,19 @@ def try_download_and_extract(data_root='data/WildAvatar', ytdl="/bin/yt-dlp"):
             img_ids = list(data.keys())[:-1]
 
             save_dir = os.path.join(save_root, video_id)
-           # ret = subprocess.run(
-             #   [
-               #     ytdl,
-               #     "https://www.youtube.com/watch?v=" + video_id,
-               #     "-f",
-               #     "best",
-               #     "mp4",
-               #     "-o",
-               #     os.path.join(save_dir, video_id+'.mp4'),
-               # ]
-          #  )
-# 或者直接使用 if True:
-            if True:
+            ret = subprocess.run(
+                [
+                    ytdl,
+                    "https://www.youtube.com/watch?v=" + video_id,
+                    "-f",
+                    "best",
+                    "-f",
+                    "mp4",
+                    "-o",
+                    os.path.join(save_dir, video_id+'.mp4'),
+                ]
+            )
+            if not ret.returncode:
                 frames_dir = os.path.join(save_dir, 'frames')
                 os.makedirs(frames_dir, exist_ok=True)
                 cmd = 'ffmpeg -i {videoname} -q:v 1 -ss {scene_start} -to {scene_end} -start_number {start_number} {outdir}/%06d.jpg'.format(
